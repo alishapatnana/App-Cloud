@@ -1,0 +1,26 @@
+<div class="container height-100 d-flex justify-content-center align-items-center">
+    <div class="position-relative"> 
+        <div class="card p-2 text-center"> 
+            <h6>Please enter the one time password <br> to verify your account</h6> 
+            <span>A code has been sent to your registered mail!</span>
+            <br>
+            <div> 
+                <form #authForm="ngForm" (ngSubmit)="onValidate(authForm)">
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Enter OTP" aria-label="otp" aria-describedby="basic-addon1" id="otp" name="otp" otp required ngModel maxlength="6">
+                          </div>
+                        <div class="mt-4"> 
+                            <button class="btn btn-danger px-4 validate">Validate</button> 
+                        </div> 
+                    </div>
+                </form>
+                 <div class="card-2"> 
+                     <div class="content d-flex justify-content-center align-items-center"> 
+                        <span>Didn't get the code</span> 
+                        <a class="text-decoration-none ms-3" [routerLink]="['tweetapp/email-verification']" (click)="sendMail()">Resend</a> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+</div>

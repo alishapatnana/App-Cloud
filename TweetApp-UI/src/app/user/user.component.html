@@ -1,0 +1,61 @@
+<section class="align-section" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
+            <div class="row pt-1" >
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button class="btn" value="search"> <span class="material-icons align-middle">search</span></button>
+                </div>
+                <input type="text" class="form-control"  id="search" name="search" placeholder="Search..." [(ngModel)]="search">
+                
+            </div>         
+            </div>           
+          </form>  
+          <h4>People you may know....</h4>        
+          <div class="card mb-3" style="border-radius: .5rem;"  *ngFor="let userDetail of users">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">                
+                <span *ngIf="userDetail?.gender=='Male'">
+                  <img src="../../assets/male.jpg" alt="Avatar" class="img-fluid my-5" style="width: 80px;"
+                />
+                </span>
+                <span *ngIf="userDetail?.gender=='Female'">
+                  <img src="../../assets/female.jpg" alt="Avatar" class="img-fluid my-5" style="width: 80px;"
+                />
+                </span>                
+                <h5 style="font-weight: bold; color: black;">{{ userDetail?.firstName }}</h5>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{ userDetail?.emailId }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Date Of Birth</h6>
+                      <p class="text-muted">{{ userDetail?.dateOfBirth | date: 'shortDate'}}</p>
+                    </div>
+                  </div>
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Name</h6>
+                      <p class="text-muted">{{ userDetail?.firstName }} {{ userDetail?.lastName }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{ userDetail?.gender }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

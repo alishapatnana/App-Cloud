@@ -1,0 +1,13 @@
+<div class="feed">
+    <div class="feed__header">
+      <h2>Notifications</h2> 
+    </div>
+    <div *ngFor="let tweet of tweets">      
+        <div class="post__body">       
+              <div class="post__headerText"  *ngFor="let reply of tweet.replies">
+              <div *ngIf="reply.notification">
+                <h3><b>{{reply.firstName +" "+ reply.lastName}}</b> replied <b>{{reply.replyText}}</b> to your tweet <b style="color: rgb(30, 167, 201);">{{tweet.tweetText}}</b></h3>
+              </div> 
+        </div>
+    </div>
+  </div>

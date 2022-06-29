@@ -1,0 +1,60 @@
+<section class="align-section" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <span *ngIf="userDetail?.gender ==='Male'">
+                  <img src="../../assets/male.jpg" alt="Avatar" class="img-fluid my-5" style="width: 80px;"
+                />
+                </span>
+                <span *ngIf="userDetail?.gender ==='Female'">
+                  <img src="../../assets/female.jpg"  alt="Avatar" class="img-fluid my-5" style="width: 80px;"
+                />
+                </span>             
+              </div>            
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Update Profile</h6>
+                  <hr class="mt-0 mb-4">
+                  <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">                    
+                    <div class="form-group" id="firstName" name="firstName">                                         
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" [(ngModel)]="firstName" >
+                    </div> 
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" [(ngModel)]="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date Of Birth</label>
+                        <input type="date" class="form-control" id="dob" name="dob" placeholder="Enter DateOfBirth" [(ngModel)]="dob" >
+                    </div>                            
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" value="Male" id="genderMale" [(ngModel)]="gender">
+                                <label class="form-check-label" for="gender">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" value="Female" id="genderFemale" [(ngModel)]="gender">
+                                <label class="form-check-label" for="gender">
+                                    Female
+                                </label>
+                            </div>
+                    </div>
+                    <div class = "form-group">
+                        <button type="submit" class="btn btn-update">Save</button> 
+                    </div>
+                  </form>      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

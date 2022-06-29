@@ -1,0 +1,82 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+.register{
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    height: 100vh;
+}
+.left{
+    background-color: var(--twitter-color);
+}
+
+.left-content{
+    margin-top: 150px;
+    padding-left: 300px;
+}
+
+.first-buuton{
+    margin-top: 500px;
+    margin-left: 250px;
+}
+
+.btn-login, .btn-signup{
+    width: 250px;
+    font-weight: 800;
+    font-size: 20px;
+    background-color: white;
+    color:  var(--twitter-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px rgb(0,0,0,0.5);
+    padding: 5px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.btn-login:hover, .btn-signup:hover{
+    background-color: var(--twitter-color);
+    color: var(--twitter-background);
+    box-shadow: none;
+}
+
+.second-button{
+    margin-top: 20px;
+    margin-left: 250px;
+}
+
+.login-button{
+    margin-top: 10px;
+}
+
+.forgot-password{
+    margin-left: 30px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.forgot-password:hover{
+    font-weight: bold;
+}
+
+.row, .form-group{
+    margin-top: 8px;
+}
+.heading{
+   padding-bottom: 100px;
+   padding-top: 0;
+   margin-top: 0;
+}
