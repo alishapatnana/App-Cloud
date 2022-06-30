@@ -921,8 +921,10 @@ class ViewUser {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TweetService", function() { return TweetService; });
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment.prod */ "cxbk");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 
 
@@ -931,17 +933,20 @@ class TweetService {
         this.http = http;
         this.tweetChanged = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.allTweets = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
+        //uri:string = "https://localhost:44396/";
+        //uri:string = "https://comtweetapp.azurewebsites.net/";
+        this.uri = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_1__["environment"].uri;
     }
     getAllTweets() {
         let tweets;
-        this.http.get('http://localhost:48897/api/v1.0/tweets/all').subscribe((responseData) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/all').subscribe((responseData) => {
             tweets = responseData;
             this.allTweets.next(tweets);
         });
     }
     getTweetById(id) {
         let tweet;
-        this.http.get('http://localhost:48897/api/v1.0/tweets/tweet/' + id).subscribe((responseData) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/tweet/' + id).subscribe((responseData) => {
             this.tweetChanged.next(responseData);
         });
     }
@@ -949,57 +954,57 @@ class TweetService {
         // this.tweets.find(x => x.id == tweetId)?.replies.push(reply);
         // this.tweetChanged.next(this.tweets.slice().find(x => x.id == tweetId));
         let userId = localStorage.getItem('user');
-        this.http.put('http://localhost:48897/api/v1.0/tweets/' + userId + '/reply/' + tweetId, { tweetText: reply.replyText })
+        this.http.put(this.uri + 'api/v1.0/tweets/' + userId + '/reply/' + tweetId, { tweetText: reply.replyText })
             .subscribe((response) => {
             this.getTweetById(tweetId);
         });
     }
     postTweet(userId, tweetText) {
-        this.http.post('http://localhost:48897/api/v1.0/tweets/' + userId + '/add', { tweetText: tweetText }).subscribe((response) => {
+        this.http.post(this.uri + 'api/v1.0/tweets/' + userId + '/add', { tweetText: tweetText }).subscribe((response) => {
             this.getAllTweets();
         });
     }
     editTweet(tweetText, tweetId) {
-        this.http.put('http://localhost:48897/api/v1.0/tweets/update/' + tweetId, { tweetText: tweetText })
+        this.http.put(this.uri + 'api/v1.0/tweets/update/' + tweetId, { tweetText: tweetText })
             .subscribe((response) => {
             this.getAllTweets();
         });
     }
     getTweetByUserId(userId) {
         let tweets;
-        this.http.get('http://localhost:48897/api/v1.0/tweets/' + userId).subscribe((responseData) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/' + userId).subscribe((responseData) => {
             tweets = responseData;
             this.allTweets.next(tweets);
         });
     }
     deleteTweetFromHome(tweetId) {
-        this.http.delete('http://localhost:48897/api/v1.0/tweets/delete/' + tweetId).subscribe((response) => {
+        this.http.delete(this.uri + 'api/v1.0/tweets/delete/' + tweetId).subscribe((response) => {
             this.getAllTweets();
         });
     }
     deleteTweetFromMyTweet(tweetId, userId) {
-        this.http.delete('http://localhost:48897/api/v1.0/tweets/delete/' + tweetId).subscribe((response) => {
+        this.http.delete(this.uri + 'api/v1.0/tweets/delete/' + tweetId).subscribe((response) => {
             this.getTweetByUserId(userId);
         });
     }
     likeOrDisLikeTweet(tweetId, userId) {
-        this.http.put('http://localhost:48897/api/v1.0/tweets/' + userId + '/like/' + tweetId, null).subscribe((response) => {
+        this.http.put(this.uri + 'api/v1.0/tweets/' + userId + '/like/' + tweetId, null).subscribe((response) => {
             this.getTweetByUserId(userId);
         });
     }
     inActivateReply(userId) {
-        this.http.put('http://localhost:48897/api/v1.0/tweets/inactivateReply/' + userId, null).subscribe((response) => {
+        this.http.put(this.uri + 'api/v1.0/tweets/inactivateReply/' + userId, null).subscribe((response) => {
             this.getAllTweets();
         });
     }
     getActiveReplies(userId) {
-        return this.http.get('http://localhost:48897/api/v1.0/tweets/activeReplies/' + userId).subscribe((data) => {
+        return this.http.get(this.uri + 'api/v1.0/tweets/activeReplies/' + userId).subscribe((data) => {
             localStorage.setItem('count', data);
         });
     }
 }
-TweetService.ɵfac = function TweetService_Factory(t) { return new (t || TweetService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
-TweetService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: TweetService, factory: TweetService.ɵfac, providedIn: 'root' });
+TweetService.ɵfac = function TweetService_Factory(t) { return new (t || TweetService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
+TweetService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: TweetService, factory: TweetService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
@@ -1435,8 +1440,10 @@ SearchUserComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment.prod */ "cxbk");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 
 
@@ -1445,24 +1452,27 @@ class UserService {
         this.http = http;
         this.userDetail = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.allUsers = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
+        //uri:string = "https://localhost:44396/";
+        //uri:string = "https://comtweetapp.azurewebsites.net/";
+        this.uri = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_1__["environment"].uri;
     }
     getUsers(userId) {
-        this.http.get('https://localhost:44396/api/v1.0/tweets/user/search/' + userId).subscribe((user) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/user/search/' + userId).subscribe((user) => {
             this.userDetail.next(user);
         });
     }
     getAllUsers() {
-        this.http.get('https://localhost:44396/api/v1.0/tweets/users/all').subscribe((users) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/users/all').subscribe((users) => {
             this.allUsers.next(users);
         });
     }
     getUsersById(id) {
-        this.http.get('https://localhost:44396/api/v1.0/tweets/users/search/' + id).subscribe((users) => {
+        this.http.get(this.uri + 'api/v1.0/tweets/users/search/' + id).subscribe((users) => {
             this.allUsers.next(users);
         });
     }
     updateProfile(user, userId) {
-        return this.http.put('https://localhost:44396/api/v1.0/tweets/updateProfile/' + userId, {
+        return this.http.put(this.uri + 'api/v1.0/tweets/updateProfile/' + userId, {
             emailId: user.emailId,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -1475,8 +1485,8 @@ class UserService {
         });
     }
 }
-UserService.ɵfac = function UserService_Factory(t) { return new (t || UserService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
-UserService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: UserService, factory: UserService.ɵfac, providedIn: 'root' });
+UserService.ɵfac = function UserService_Factory(t) { return new (t || UserService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
+UserService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: UserService, factory: UserService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
@@ -2389,7 +2399,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
 /* harmony import */ var _user_view_user_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user/view-user.model */ "DzZ+");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment.prod */ "cxbk");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 
 
@@ -2404,12 +2416,15 @@ class AuthService {
         this.userDetail = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.selectedValue = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.userId = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        //uri:string = "https://localhost:44396/";
+        //uri:string = "https://comtweetapp.azurewebsites.net/";
+        this.uri = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_4__["environment"].uri;
     }
     signUp(userDetail) {
-        return this.http.post('https://localhost:44396/api/v1.0/tweets/register', userDetail);
+        return this.http.post(this.uri + 'api/v1.0/tweets/register', userDetail);
     }
     login(emailId, password) {
-        return this.http.post('https://localhost:44396/api/v1.0/tweets/login', {
+        return this.http.post(this.uri + 'api/v1.0/tweets/login', {
             emailId: emailId,
             password: password
         }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(responseData => {
@@ -2427,20 +2442,20 @@ class AuthService {
         localStorage.clear();
     }
     SecurityCheckValidation(emailId, question, answer) {
-        return this.http.put('https://localhost:44396/api/v1.0/tweets/forgot', {
+        return this.http.put(this.uri + 'api/v1.0/tweets/forgot', {
             emailId: emailId,
             securityQuestion: question,
             securityAnswer: answer
         });
     }
     resetPassword(userId, newPassword) {
-        return this.http.put('https://localhost:44396/api/v1.0/tweets/resetPassword/' + userId, {
+        return this.http.put(this.uri + 'api/v1.0/tweets/resetPassword/' + userId, {
             oldPassword: "Some random value!",
             newPassword: newPassword
         });
     }
     mailSend(userId) {
-        return this.http.get('https://localhost:44396/api/v1.0/tweets/users/mail/' + userId).subscribe((data) => {
+        return this.http.get(this.uri + 'api/v1.0/tweets/users/mail/' + userId).subscribe((data) => {
             this.userOtp = data;
             localStorage.setItem('userOtp', this.userOtp);
         });
@@ -2455,8 +2470,26 @@ class AuthService {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])(errorMessage);
     }
 }
-AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])); };
+AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])); };
 AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: AuthService, factory: AuthService.ɵfac, providedIn: 'root' });
+
+
+/***/ }),
+
+/***/ "cxbk":
+/*!**********************************************!*\
+  !*** ./src/environments/environment.prod.ts ***!
+  \**********************************************/
+/*! exports provided: environment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+const environment = {
+    production: true,
+    uri: "https://tweetapicom.azurewebsites.net/"
+};
 
 
 /***/ }),

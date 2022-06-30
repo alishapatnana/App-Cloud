@@ -1,0 +1,4 @@
+{
+    "appService.deploySubpath": "dist\\tweet-app",
+    "appService.defaultWebAppToDeploy": "/subscriptions/b12a826f-a5e9-45b1-8aa9-3d2a2e51e3ee/resourceGroups/tweetapp-rg/providers/Microsoft.Web/sites/comtweetapp"
+}

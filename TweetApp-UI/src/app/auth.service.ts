@@ -6,6 +6,7 @@ import { ViewUser } from "./user/view-user.model";
 import {catchError} from 'rxjs/operators';
 import { throwError } from "rxjs";
 import {tap} from 'rxjs/operators';
+import { environment } from "src/environments/environment.prod";
 
 @Injectable({providedIn: 'root'})
 export class AuthService{
@@ -13,14 +14,17 @@ export class AuthService{
     selectedValue = new EventEmitter<string>();
     userId = new Subject<string | null>();
     userOtp : string;
+    //uri:string = "https://localhost:44396/";
+    //uri:string = "https://comtweetapp.azurewebsites.net/";
+    uri:string = environment.uri;
     constructor(private http: HttpClient){}
 
     signUp(userDetail: User){
-        return this.http.post('https://localhost:44396/api/v1.0/tweets/register', userDetail);
+        return this.http.post(this.uri + 'api/v1.0/tweets/register', userDetail);
     }
 
     login(emailId: string, password: string){
-        return this.http.post<ViewUser>('https://localhost:44396/api/v1.0/tweets/login', {
+        return this.http.post<ViewUser>(this.uri +'api/v1.0/tweets/login', {
             emailId: emailId,
             password: password
         }).pipe( catchError(this.handleError), tap(responseData => {
@@ -46,7 +50,7 @@ export class AuthService{
     }
 
     SecurityCheckValidation(emailId: string, question: number, answer: string){
-        return this.http.put<boolean>('https://localhost:44396/api/v1.0/tweets/forgot', {
+        return this.http.put<boolean>(this.uri+'api/v1.0/tweets/forgot', {
             emailId : emailId,
             securityQuestion: question,
             securityAnswer: answer
@@ -54,7 +58,7 @@ export class AuthService{
     }
 
     resetPassword(userId: string, newPassword: string){
-        return this.http.put<boolean>('https://localhost:44396/api/v1.0/tweets/resetPassword/'+userId,
+        return this.http.put<boolean>(this.uri+'api/v1.0/tweets/resetPassword/'+userId,
         {
             oldPassword: "Some random value!",
             newPassword: newPassword
@@ -62,7 +66,7 @@ export class AuthService{
     }
 
     mailSend(userId:string){
-       return this.http.get<any>('https://localhost:44396/api/v1.0/tweets/users/mail/'+ userId).subscribe((data)=>{
+       return this.http.get<any>(this.uri+'api/v1.0/tweets/users/mail/'+ userId).subscribe((data)=>{
            this.userOtp = data;
            localStorage.setItem('userOtp',this.userOtp);
        });
